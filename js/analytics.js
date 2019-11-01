@@ -77,7 +77,7 @@ function getLastAnswers () {
     }
     document.getElementById("score_correct").innerHTML = `${nCorr}/5`
     document.getElementById("fastest").innerHTML = Math.floor(mxTime/60)
-    if (n!==0)
+    if (nCorr!==0)
         document.getElementById("averagest").innerHTML = Math.floor((timeTot/nCorr)/60)
     else
         document.getElementById("averagest").innerHTML = 0 
