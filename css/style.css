@@ -1,0 +1,162 @@
+* {
+    background: #f7e7ce;
+}
+
+@font-face {
+    font-family: "Digi";
+    src: url("fonts/ds-digib.ttf");
+  }
+
+
+.block {
+    padding: 20px 20px 20px 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#start_btn{
+    background: #42cc8c;
+    text-shadow: 1px 1px 4px darkgray ;
+    color: black;
+    width: 92vw;
+    height: 6vh;
+    margin: 1vh 0 0 3vw;
+    font-size: 14px;
+    border-radius: 1vh;
+    /*  display:inline-block;
+     padding:0.46em 1.6em;
+     border:0.1em solid #000000;
+     margin:0 0.2em 0.2em 0;
+     border-radius:0.12em;
+     box-sizing: border-box;
+     text-decoration:none;
+     font-family:'Roboto',sans-serif;
+     font-weight:300;
+     color:#000000;
+     text-shadow: 0 0.04em 0.04em rgba(0,0,0,0.35);
+     background-color:#FFFFFF;
+     text-align:center;
+     transition: all 0.15s; */
+}
+
+.next_btn{
+    background: #42cc8c;
+    text-shadow: 1px 1px 4px darkgray ;
+    color: black;
+    width: 220px;
+    height: 6vh;
+    font-size: 14px;
+    border-radius: 1vh;  
+    padding: 20px 0;
+    position: relative;
+    text-align: center;
+}
+
+.txt_cent {
+    display: flex;
+    justify-content: center;
+    padding: 5px 20px 5px 20px;
+    color: dimgray;;
+}
+
+.cappy {
+    padding: 2px 20px 2px 20px;
+    position: relative;
+}
+
+.btn_main{
+    background: brown;
+    text-shadow: 1px 1px 4px darkgray ;
+    color: cornsilk;
+    width: 45vw;
+    height: 8vh;
+    border-radius: 1vh;
+    font-size: 16px;
+}
+.btn_secnd{
+    color: black;
+    text-shadow: 1px 1px 4px blanchedalmond ;
+    background: gray;
+    height: 5vh;
+    border-radius: 1vh;
+    font-size: 14px;  
+}
+
+.quantbtn {
+    width: 45vw;
+}
+.verbbtn {
+    width: 45vw;
+}
+
+.replecement{
+    width: 73.5vw;
+    margin: 3.5vw;
+    background:  #FFFAFA;
+    border-radius: 1vh;
+    height: 6vh;
+}
+
+.widmid {
+    width: 70vw;
+    margin: 3.5vw;
+    background: #FFFFFF;
+    border-radius: 1vh;
+
+}
+
+.right_part {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 250px;
+    padding: 5px;
+}
+
+.equal {
+    width: 40vw;
+}
+
+#big_num{
+    font-family: "Digi";
+    font-size: 80px;
+    color: brown;
+}
+
+.clock {
+    border: 2px solid #000;
+    border-radius: 20px;
+    box-sizing: border-box;
+    font-family: "Digi";
+    font-size: 80px;
+    height: 140px;
+    margin: 0 auto;
+    padding: 20px 0;
+    position: relative;
+    text-align: center;
+    width: 220px;
+  }
+
+
+
+.left_part {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-content: center;
+    padding: 5px;
+    width: 600px;
+}
+
+
+
+.custom {
+    background: #F8F8FF;
+
+}
+
+.placeholder {
+    width: 45vw;
+    height: 12vh;
+}

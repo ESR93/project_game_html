@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <title>Document</title>
+</head>
+<body>
+    <script type = 'module' src="js/analytics.js"></script>
+    <div class="txt_cent">
+            <h1>NOW LETS SEE THE RESULTS</h1>
+        </div>
+    <div class="txt_cent">
+        <div class='placeholder'></div>
+    </div>
+    <div>
+            <div class = 'block cappy '>
+                    <div class="equal">
+                        <span>Your preformance:</span>
+                        <ol>
+                            <li><div class="block cappy">
+                                <div>Questions scored correctly:</div> <div id='score_correct'></div>
+                            </div></li>
+                            <li><div class="block cappy">
+                                <div>The best time for correct question:</div> <div id='fastest'></div>
+                            </div></li>
+                            <li><div class="block cappy">
+                                <div>The average time per question:</div> <div id='averagest'></div>
+                            </div></li>
+                        </ol>
+                    </div>
+                    <div >
+                        <span>
+                            <div class="equal">
+                                The advanced machine learning blockchain enabled digitally transformed engine estimated your GMAT score to be
+                            </div>
+                            <div id="big_num"></div>
+                            <div>
+                                You can be proud of yourself! &#129322;    
+                            </div>
+                        </span>
+                    </div>
+                </div> 
+                <div class='placeholder'></div>       
+        <div class = 'block cappy'>
+            <div><button class="btn_main" style="width: 800px;" id="quant">COMPARE YOUR PERFORMANCE TO THE REST</button></div>
+        </div>
+        <div class = 'block cappy'>
+            <div >
+                <canvas id="line-chart" width="400" height="250"></canvas>
+            </div>
+            <div >
+                <canvas id="radar-chart" width="400" height="250"></canvas>
+            </div>
+        </div>
+</body>
+</html>

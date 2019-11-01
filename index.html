@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <title>Document</title>
+</head>
+<body>
+    <script type = 'module' src="js/gmat_grid.js"></script>
+    <script type = 'module' src="js/chronometer.js"></script>
+    <div class="txt_cent">
+        <h1>ARE YOU READY TO TEST YOURSELF? &#128556;</h1>
+    </div>
+    <div>
+        <div class = 'block cappy'>
+            <div><button class="btn_main" id="quant">QUANT</button></div>
+            <div><button class="btn_main" id="verb">VERBAL</button></div>
+        </div>
+        <div class = 'block cappy'>
+            <div><button class="btn_secnd quantbtn" id="prob_solv">PROBLEM SOLVING</button></div>
+            <div><button class="btn_secnd quantbtn" id="data_suf">DATA SUFFICIENCY</button></div>
+        </div>
+        <div class = 'block cappy'>
+            <div><button class="btn_secnd verbbtn" id="critical">CRITICAL THINKING</button></div>
+            <div><button class="btn_secnd verbbtn" id="correct">SENTENCE CORRECTION</button></div>
+        </div>
+    </div>
+    <div class ='gmat_block'>
+        <div><button id="start_btn">START</button></div>
+        <div class = 'block widmid'>
+            <div class="left_part">
+                <div class="q_number ">question</div>
+                <br>
+                <div class="q_context ">context</div>
+                <div class="q_text ">question</div>
+                <div class="q_img "><img src=""></div>
+                <div class="answers "><p>answers:</p>
+                    <span custom>
+                        <input type="radio" name="question" value="option 1"> option 1<br>
+                        <input type="radio" name="question" value="option 2"> option 2<br>
+                        <input type="radio" name="question" value="option 3"> option 3<br>
+                        <input type="radio" name="question" value="option 4"> option 4<br>
+                        <input type="radio" name="question" value="option 5"> option 5<br>
+                    </span>
+                </div>
+            </div>
+            <div class = 'right_part'>
+                <div>
+                    <div class="clock" >      
+                        <span class="minDec number">0</span><span class="minUni number">0</span><span>:</span><span class="secDec number">0</span><span class="secUni number">0</span>
+                    </div>
+                </div>
+                <div>
+                    <button class="next_btn">NEXT</button>
+                </div>
+            </div>
+        </div>
+        <div class='replecement'></div>
+    </div> 
+</body>
+</html>
