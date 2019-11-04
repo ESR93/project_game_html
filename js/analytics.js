@@ -4,11 +4,64 @@ let lineLables = []
 let radarLables = []
 let radarData = []
 let dataAttr=['Problem Solving','Data Sufficiency','Critical Reasoning','Sentence Correction']
+let currentObject
 
 // 1. FETCH DATA FROM THE DATABASE AND HIDING UNNECESSARY DATA OF THE PAGE
 axios.get('http://127.0.0.1:8000/api/get_answers').then(res => {
   gmatData = res.data;
   console.log(gmatData)
+
+  function getLastAnswers () {
+    let mx = 0
+    gmatData.forEach(elem => {
+        if(!elem.answers.length) return;
+        else{
+            elem.answers.forEach(answ =>{
+                if (answ.id > mx)
+                    mx = answ.id 
+            })
+        }
+    })
+    let arr = []
+    let lbl
+    let nCorr = 0
+    let timeTot = 0
+    let mxTime = 0
+    for(let i=(mx-4); i<=mx; i++)
+    {
+        gmatData.forEach(elem => {
+            if(!elem.answers.length) return;
+            else{
+                lbl = elem.question_type
+                elem.answers.forEach(answ =>{
+                    if (answ.id === i)
+                    {
+                        arr.push(answ.time_spent/100)
+                        if (answ.correct)
+                        {   
+                            nCorr ++
+                            timeTot += answ.time_spent/100
+                            if(mxTime<answ.time_spent/100)
+                                mxTime = answ.time_spent/100
+                        }
+
+                    }
+                })
+            }
+        })
+    }
+    document.getElementById("score_correct").innerHTML = `${nCorr}/5`
+    document.getElementById("fastest").innerHTML = `${Math.floor(mxTime)} sec`
+    if (nCorr!==0)
+        document.getElementById("averagest").innerHTML = `${Math.floor((timeTot/nCorr))} sec`
+    else
+        document.getElementById("averagest").innerHTML = 0 
+    let theScore = (650 + Math.floor((100/5)*nCorr))
+    document.getElementById("big_num").innerHTML = theScore
+    return {"lable":lbl, "data":arr, "correct": nCorr }
+}
+
+    currentObject = getLastAnswers()
 }).catch(err => console.log(err))
 
 function convertData(num){
@@ -57,70 +110,19 @@ function gradesCalc(){
     return  arr
 }
 
-function getLastAnswers () {
-    let mx = 0
-    gmatData.forEach(elem => {
-        if(!elem.answers.length) return;
-        else{
-            elem.answers.forEach(answ =>{
-                if (answ.id > mx)
-                    mx = answ.id 
-            })
-        }
-    })
-    let arr = []
-    let lbl
-    let nCorr = 0
-    let timeTot = 0
-    let mxTime = 0
-    for(let i=(mx-4); i<=mx; i++)
-    {
-        gmatData.forEach(elem => {
-            if(!elem.answers.length) return;
-            else{
-                lbl = elem.question_type
-                elem.answers.forEach(answ =>{
-                    if (answ.id === i)
-                    {
-                        arr.push(answ.time_spent/100)
-                        if (answ.correct)
-                        {   
-                            nCorr ++
-                            timeTot += answ.time_spent
-                            if(mxTime<answ.time_spent)
-                                mxTime = answ.time_spent
-                        }
-
-                    }
-                })
-            }
-        })
-    }
-    document.getElementById("score_correct").innerHTML = `${nCorr}/5`
-    document.getElementById("fastest").innerHTML = Math.floor(mxTime/60)
-    if (nCorr!==0)
-        document.getElementById("averagest").innerHTML = Math.floor((timeTot/nCorr)/60)
-    else
-        document.getElementById("averagest").innerHTML = 0 
-    let theScore = (650 + Math.floor((100/5)*nCorr))
-    document.getElementById("big_num").innerHTML = theScore
-    return {"lable":lbl, "data":arr, "correct": nCorr }
-}
-
 function pushToRadar(res) {
     let arr = []
     dataAttr.forEach( elem => {
         if(res.lable === elem)
         {
             console.log(elem)
-            arr.push(res.correct/5)
+            arr.push(res.correct)
         }
         else
             arr.push(0)
     })
     return arr
 }
-
 
 
 document.getElementById("quant").onclick = () => {
@@ -131,23 +133,24 @@ document.getElementById("quant").onclick = () => {
         lineLables.push(`Q ${i}`)
         lineData.push(convertData(i))
     }
-    let currentObject = getLastAnswers()
     console.log(currentObject)
 
     new Chart(document.getElementById("line-chart").getContext('2d'), {
-        type: 'line',
+        type: 'bar',
         data: {
             labels: lineLables,
             datasets: [{
                 label: "Overall performance",
                 data: lineData,
                 borderColor: "darkgray",
+                borderWidth: 1,
                 fill: false,
             },
             {
                 label: "Your performance",
                 data: currentObject.data,
                 borderColor: "brown",
+                borderWidth: 1,
                 fill: false,
             },
         ],
