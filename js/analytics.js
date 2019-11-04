@@ -5,7 +5,7 @@ let barLables = []
 let barData = []
 let dataAttr=['Problem Solving','Data Sufficiency','Critical Reasoning','Sentence Correction']
 
-// 1. FETCH DATA FROM THE DATABASE AND HIDING UNNECESSARY DATA ON THE PAGE
+// 1. FETCH DATA FROM THE DATABASE AND HIDING UNNECESSARY DATA OF THE PAGE
 axios.get('http://127.0.0.1:8000/api/get_answers').then(res => {
   gmatData = res.data;
   console.log(gmatData)
@@ -101,7 +101,7 @@ document.getElementById("quant").onclick = () => {
     new Chart(document.getElementById("line-chart").getContext('2d'), {
         type: 'line',
         data: {
-            lables: lineLables,
+            labels: lineLables,
             datasets: [{
                 lable: "Your performance",
                 data: lineData,
