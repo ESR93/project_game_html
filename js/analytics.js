@@ -1,20 +1,18 @@
 let gmatData = []
 let lineData = []
 let lineLables = []
-let barLables = []
-let barData = []
+let radarLables = []
+let radarData = []
 let dataAttr=['Problem Solving','Data Sufficiency','Critical Reasoning','Sentence Correction']
 
 // 1. FETCH DATA FROM THE DATABASE AND HIDING UNNECESSARY DATA OF THE PAGE
 axios.get('http://127.0.0.1:8000/api/get_answers').then(res => {
   gmatData = res.data;
   console.log(gmatData)
-  let currentObject = getLastAnswers ()
-  console.log(currentObject)
 }).catch(err => console.log(err))
 
 function convertData(num){
-    let avg = 0
+    let sum = 0
     let n = 0
     gmatData.forEach(elem => {
         if(!elem.answers.length) return;
@@ -22,16 +20,41 @@ function convertData(num){
             elem.answers.forEach( answ =>{
                 if(answ.question_number === num)
                     {
-                        console.log(num)
-                        console.log(answ.time_spent)
-                        avg += answ.time_spent
+                        sum += answ.time_spent
                         n++
                     }
             })
         }
     })
     if(n!==0)
-        return avg/n
+        return sum/n/100
+}
+
+function gradesCalc(){
+
+    let arr = []
+    dataAttr.forEach(attrib =>
+        {   
+            let nCorr = 0
+            let nTot = 0
+            gmatData.forEach(elem => {
+                if(!elem.answers.length) return;
+                else{
+                    if(elem.question_type === attrib)
+                    {
+                        nTot+=elem.answers.length
+                        nCorr+=elem.answers.filter(e => e.correct).length
+                    }
+                }
+            })
+            console.log(nCorr)
+            console.log(nTot)
+            if (nTot!==0)
+                arr.push(nCorr/nTot*5)
+            else
+                arr.push(0)
+        })
+    return  arr
 }
 
 function getLastAnswers () {
@@ -45,7 +68,6 @@ function getLastAnswers () {
             })
         }
     })
-    console.log(mx)
     let arr = []
     let lbl
     let nCorr = 0
@@ -60,10 +82,9 @@ function getLastAnswers () {
                 elem.answers.forEach(answ =>{
                     if (answ.id === i)
                     {
-                        arr.push(answ.time_spent)
+                        arr.push(answ.time_spent/100)
                         if (answ.correct)
                         {   
-                            console.log(elem)
                             nCorr ++
                             timeTot += answ.time_spent
                             if(mxTime<answ.time_spent)
@@ -86,56 +107,110 @@ function getLastAnswers () {
     return {"lable":lbl, "data":arr, "correct": nCorr }
 }
 
+function pushToRadar(res) {
+    let arr = []
+    dataAttr.forEach( elem => {
+        if(res.lable === elem)
+        {
+            console.log(elem)
+            arr.push(res.correct/5)
+        }
+        else
+            arr.push(0)
+    })
+    return arr
+}
+
+
 
 document.getElementById("quant").onclick = () => {
     lineData = []
     lineLables = []
     for(let i=1; i<6; i++)
     {
-        lineLables.push(`${i}`)
+        lineLables.push(`Q ${i}`)
         lineData.push(convertData(i))
     }
-    console.log(lineData)
-    console.log(lineLables)
+    let currentObject = getLastAnswers()
+    console.log(currentObject)
 
     new Chart(document.getElementById("line-chart").getContext('2d'), {
         type: 'line',
         data: {
             labels: lineLables,
             datasets: [{
-                lable: "Your performance",
+                label: "Overall performance",
                 data: lineData,
-                borderColor: "#3e95cd",
+                borderColor: "darkgray",
                 fill: false,
-            },],
+            },
+            {
+                label: "Your performance",
+                data: currentObject.data,
+                borderColor: "brown",
+                fill: false,
+            },
+        ],
         },
         options: {
             title: {
               display: true,
               text: 'Average time spent per question'
-            }
-          }
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                    },    
+                    scaleLabel: {
+                        display: true,
+                        labelString: '[sec]',
+                        position: 'left',
+                      }
+                }]
+            }          
+        }
     });
-
+    radarData = gradesCalc()
+    console.log(radarData)
+    console.log(currentObject)
+    let resRadarData = pushToRadar(currentObject)
+    console.log(resRadarData)
     new Chart(document.getElementById("radar-chart").getContext('2d'), {
         type: 'radar',
         data: {
-            lables: dataAttr,
+            labels: dataAttr,
             datasets: [{
-                lable: "Total",
-                backgroundColor: "rgba(179,181,198,0.2)",
-                borderColor: "rgba(179,181,198,1)",
+                label: "Total",
+                borderColor: "darkgrey",
+                pointBorderColor: "darkgrey",
+                pointBackgroundColor: "darkgrey",
+                data: radarData,
+                borderColor: "darkgrey",
+                fill: false,  
+            },
+            {
+                label: "Your Score",
+                borderColor: "brown",
                 pointBorderColor: "#fff",
-                pointBackgroundColor: "rgba(179,181,198,1)",
-                data: [3,4,5,4,5],
-                borderColor: "#3e95cd",
-                fill: false,   
+                pointBackgroundColor: "brown",
+                data: resRadarData,
+                borderColor: "brown",
+                fill: false,  
             },],
         },
         options: {
             title: {
               display: true,
               text: 'Average scores per question'
+            },
+            scale: {
+                ticks: {
+                    beginAtZero: true,
+                    max: 5,
+                    min: 0,
+                    stepSize: 1
+                }
             }
           }
     });
